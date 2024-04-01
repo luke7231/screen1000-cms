@@ -50,6 +50,41 @@ const ImageUpload = () => {
     setLoading(false);
   };
 
+  const handleSubmit = async () => {
+    if (selectedFiles.length === 0) {
+      console.log("이미지를 선택하세요.");
+      return;
+    }
+    setLoading(true);
+
+    // 🚀 업로드
+    try {
+      // 1️⃣ full image upload
+      const uploadPromises = selectedFiles.map((file: File) => {
+        return uploadToS3(file as File);
+      });
+      const results = await Promise.all(uploadPromises);
+
+      // 2️⃣ croped image upload
+      const uploadCropedImgPromises = selectedFiles.map((file: File) => {
+        return cropImage(file).then((resizedImage) => {
+          return uploadToS3(resizedImage as File, true);
+        });
+      });
+      const resultCropped = await Promise.all(uploadCropedImgPromises);
+
+      console.log("S3에 업로드된 이미지 URL:", results);
+      console.log("S3에 업로드된 이미지 THUMBNAIL URL:", resultCropped);
+
+      const mergedArray = mergeArrays(resultCropped, results); // DB 업로드하기 편하게 머지.
+      setResult(mergedArray);
+    } catch (error) {
+      console.error("이미지 처리 오류:", error);
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div className="p-24">
       <input
@@ -93,6 +128,13 @@ const ImageUpload = () => {
         onClick={handleOpti}
       >
         최적화 🚀
+      </button>
+
+      <button
+        className="mt-4 mr-4 border border-black p-2 rounded-lg"
+        onClick={handleSubmit}
+      >
+        업로드 ⬆️
       </button>
     </div>
   );
