@@ -63,8 +63,6 @@ export default function RootLayout({
         </header>
         {children}
       </body>
-      {/* Pretendard test */}
-      {/* <body className={pretendard.className}>{children}</body> */}
     </html>
   );
 }
