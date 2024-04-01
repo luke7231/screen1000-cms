@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #fafafa;
+}
+
+.hover-scale {
+  transition: transform 0.3s ease; /* 변화가 일어날 속성, 지속 시간, 타이밍 함수 설정 */
+}
+
+.hover-scale:hover {
+  transform: scale(1.05); /* 스케일을 1.1로 변경 (10% 크게) */
+}
