@@ -85,6 +85,8 @@ const ImageUpload = () => {
     setLoading(false);
   };
 
+  const insertPageWithArray = insertPages.bind(null, result);
+
   return (
     <div className="p-24">
       <input
@@ -136,6 +138,12 @@ const ImageUpload = () => {
       >
         업로드 ⬆️
       </button>
+
+      <form action={insertPageWithArray} className="inline-block">
+        <button className="mt-4 mr-4 border border-black p-2 rounded-lg">
+          객체 생성 💾
+        </button>
+      </form>
     </div>
   );
 };
