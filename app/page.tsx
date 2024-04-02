@@ -30,7 +30,7 @@ const ImageUpload = () => {
     // 🧹 이미지 최적화
     try {
       const compressedFilesPromises = selectedFiles.map((file: File) => {
-        return compressFile(file, 0.8);
+        return compressFile(file, 0.9);
       });
 
       // 압축된 이미지로 선택된 파일 업데이트
