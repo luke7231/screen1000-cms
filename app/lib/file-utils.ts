@@ -58,12 +58,12 @@ export const cropImage = (file: File) => {
   });
 };
 
-const KEY = "AKIATHRMURH62Z4UFOYA";
-const SECRETKEY = "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";
+const KEY = process.env.NEXT_PUBLIC_AWS_KEY;
+const SECRET_KEY = process.env.NEXT_PUBLIC_AWS_SECRET_KEY;
 
 const s3 = new AWS.S3({
   accessKeyId: KEY,
-  secretAccessKey: SECRETKEY,
+  secretAccessKey: SECRET_KEY,
   region: "ap-northeast-2",
 });
 
