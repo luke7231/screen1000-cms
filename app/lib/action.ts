@@ -6,15 +6,16 @@ interface Page {
   key: string;
   img: string;
   thumbnail: string;
+  tag: string;
 }
 
-export async function insertPages(pages: Page[]) {
+export async function insertPages(pages: Page[], tag: string) {
   try {
     console.log("데이터 삽입 시동");
 
     await Promise.all(
       pages.map(async (page) => {
-        await sql`INSERT INTO page (name, image, thumbnail) VALUES (${page.key}, ${page.img}, ${page.thumbnail})`;
+        await sql`INSERT INTO page (name, image, thumbnail, tag) VALUES (${page.key}, ${page.img}, ${page.thumbnail}, ${tag})`;
       })
     );
 

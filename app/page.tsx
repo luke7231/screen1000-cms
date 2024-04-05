@@ -9,6 +9,7 @@ const ImageUpload = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<any>([]);
   const [result, setResult] = useState<any>([]);
+  const [tag, setTag] = useState<string>("saas");
   const [loading, setLoading] = useState(false);
 
   const filesSelectedHandler = (event: any) => {
@@ -85,7 +86,7 @@ const ImageUpload = () => {
     setLoading(false);
   };
 
-  const insertPageWithArray = insertPages.bind(null, result);
+  const insertPageWithArray = insertPages.bind(null, result, tag);
 
   return (
     <div className="p-24">
@@ -95,6 +96,16 @@ const ImageUpload = () => {
         onChange={filesSelectedHandler}
         multiple
       />
+      <div className="inline">
+        <span className="pr-4">태그</span>
+        <select
+          className="mt-4 mr-4 border border-black p-2 rounded-lg"
+          onChange={(value) => setTag(value.target.value)}
+        >
+          <option value="sass">사스</option>
+          <option value="sass-global">사스(해외)</option>
+        </select>
+      </div>
       <div className="flex gap-4 ">
         {previewUrls.map((previewUrl: string, index: number | string) => (
           <img
@@ -140,7 +151,7 @@ const ImageUpload = () => {
       </button>
 
       <form action={insertPageWithArray} className="inline-block">
-        <button className="mt-4 mr-4 border border-black p-2 rounded-lg">
+        <button className="border border-black p-2 rounded-lg">
           객체 생성 💾
         </button>
       </form>
