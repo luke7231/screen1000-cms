@@ -41,9 +41,10 @@ const ImageUpload = () => {
           // 새로 압축된 파일로 선택된 파일 업데이트
           setSelectedFiles(compressedFiles);
           setIsOptimized(true);
-          console.log("최적화 완료 🚀");
+          alert("최적화 완료 🚀");
         })
         .catch((error: any) => {
+          alert("압축된 이미지를 업데이트하는 도중 오류 발생 ⚠️");
           console.error("압축된 이미지를 업데이트하는 도중 오류 발생:", error);
         });
     } catch (error) {
@@ -55,7 +56,7 @@ const ImageUpload = () => {
 
   const handleSubmit = async () => {
     if (selectedFiles.length === 0) {
-      console.log("이미지를 선택하세요.");
+      alert("이미지를 선택하세요.");
       return;
     }
     if (!isOptimized) {
