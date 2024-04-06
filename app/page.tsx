@@ -110,7 +110,7 @@ const ImageUpload = () => {
           onChange={(value) => setTag(value.target.value)}
         >
           <option value="sass">사스</option>
-          <option value="sass-global">사스(해외)</option>
+          <option value="saas-global">사스(해외)</option>
         </select>
       </div>
       <div className="flex gap-4 ">
