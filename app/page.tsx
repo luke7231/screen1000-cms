@@ -137,7 +137,6 @@ const ImageUpload = () => {
                 alt={`Result ${index}`}
                 style={{ maxWidth: "100%", maxHeight: "200px" }}
               />
-              {/* <h3>{resultImageUrl}</h3> */}
             </div>
           )
         )}
