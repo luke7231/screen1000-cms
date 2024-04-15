@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { insertPages } from "./lib/action";
-import { mergeArrays } from "./lib/utils";
+import { convertArray, mergeArrays } from "./lib/utils";
 import { compressFile, cropImage, uploadToS3 } from "./lib/file-utils";
 
 const ImageUpload = () => {
@@ -11,6 +11,7 @@ const ImageUpload = () => {
   const [isOptimized, setIsOptimized] = useState(false);
   const [result, setResult] = useState<any>([]);
   const [tag, setTag] = useState<string>("saas");
+  const [needCrop, setNeedCrop] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const filesSelectedHandler = (event: any) => {
@@ -65,27 +66,41 @@ const ImageUpload = () => {
     }
     setLoading(true);
 
-    // 🚀 업로드
+    // 🚀 업로드 로직
     try {
-      // 1️⃣ full image upload
-      const uploadPromises = selectedFiles.map((file: File) => {
-        return uploadToS3(file as File);
-      });
-      const results = await Promise.all(uploadPromises);
-
-      // 2️⃣ croped image upload
-      const uploadCropedImgPromises = selectedFiles.map((file: File) => {
-        return cropImage(file).then((resizedImage) => {
-          return uploadToS3(resizedImage as File, true);
+      if (needCrop) {
+        // 1️⃣ full image upload
+        const uploadPromises = selectedFiles.map((file: File) => {
+          return uploadToS3(file as File);
         });
-      });
-      const resultCropped = await Promise.all(uploadCropedImgPromises);
+        const results = await Promise.all(uploadPromises);
 
-      console.log("S3에 업로드된 이미지 URL:", results);
-      console.log("S3에 업로드된 이미지 THUMBNAIL URL:", resultCropped);
+        // 2️⃣ croped image upload
+        const uploadCropedImgPromises = selectedFiles.map((file: File) => {
+          return cropImage(file).then((resizedImage) => {
+            return uploadToS3(resizedImage as File, true);
+          });
+        });
+        const resultCropped = await Promise.all(uploadCropedImgPromises);
 
-      const mergedArray = mergeArrays(resultCropped, results); // DB 업로드하기 편하게 머지.
-      setResult(mergedArray);
+        console.log("S3에 업로드된 이미지 URL:", results);
+        console.log("S3에 업로드된 이미지 THUMBNAIL URL:", resultCropped);
+
+        // 형변환 후 상태에 저장.
+        const mergedArray = mergeArrays(resultCropped, results); // DB 업로드하기 편하게 머지.
+        setResult(mergedArray);
+      } else {
+        // 1️⃣ full image upload
+        const uploadPromises = selectedFiles.map((file: File) => {
+          return uploadToS3(file as File);
+        });
+        const results = await Promise.all(uploadPromises);
+
+        console.log("S3에 업로드된 이미지 URL:", results);
+
+        // 형변환 후 상태에 저장.
+        setResult(convertArray(results));
+      }
     } catch (error) {
       console.error("이미지 처리 오류:", error);
     }
@@ -112,6 +127,11 @@ const ImageUpload = () => {
           <option value="sass">사스</option>
           <option value="saas-global">사스(해외)</option>
         </select>
+      </div>
+      <div className="inline">
+        <span className="pr-4">이미지 자르기</span>
+
+        <input type="checkbox" onChange={() => setNeedCrop((prev) => !prev)} />
       </div>
       <div className="flex gap-4 ">
         {previewUrls.map((previewUrl: string, index: number | string) => (

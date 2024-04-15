@@ -34,6 +34,18 @@ export const mergeArrays = (arr1: any[], arr2: any[]): ResultPage[] => {
   return mergedArray;
 };
 
+export const convertArray = (arr1: any) => {
+  const newArray = arr1.map((page) => {
+    return {
+      key: page.key,
+      img: page.Location,
+      thumbnail: page.Location,
+    };
+  });
+  console.log(newArray);
+  return newArray;
+};
+
 // Delete like '.jpg', '.webp', '.avif' ... etc
 export const removeExtension = (filename: string): string => {
   const lastDotIndex = filename.lastIndexOf(".");
