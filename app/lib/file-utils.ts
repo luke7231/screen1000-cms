@@ -86,7 +86,7 @@ export const uploadToS3 = async (
     // 업로드 명세 정의
     const params = {
       ACL: "public-read",
-      Bucket: "habitstorage", // S3 버킷 이름
+      Bucket: "screen1000", // S3 버킷 이름
       Key: isCroped ? `${tag}/${filename}_thumbnail` : `${tag}/${filename}`, // 파일 이름
       Body: file, // 업로드할 파일 데이터
       ContentType: "image/jpeg",
