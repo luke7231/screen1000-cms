@@ -108,6 +108,7 @@ const ImageUpload = () => {
     setLoading(false);
   };
 
+  // server action 입니다.
   const insertPageWithArray = insertPages.bind(null, result, tag);
 
   return (
