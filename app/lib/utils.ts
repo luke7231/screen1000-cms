@@ -16,13 +16,13 @@ export const mergeArrays = (
 
   // arr1 항목을 맵에 추가
   for (const item of arr1) {
-    const key = item.key.split("_")[0];
+    const key = item.key.split("_")[0].split("/")[1];
     map[key] = { ...map[key], thumbnail: item.Location };
   }
 
   // arr2 항목을 맵에 추가하거나 업데이트
   for (const item of arr2) {
-    const key = item.key;
+    const key = item.key.split("/")[1];
     if (map[key]) {
       map[key].img = item.Location;
     } else {
