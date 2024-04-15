@@ -1,10 +1,15 @@
+import { S3UploadPayload } from "./file-utils";
+
 interface ResultPage {
   key: string;
   img: string;
   thumbnail: string;
 }
 
-export const mergeArrays = (arr1: any[], arr2: any[]): ResultPage[] => {
+export const mergeArrays = (
+  arr1: S3UploadPayload[],
+  arr2: S3UploadPayload[]
+): ResultPage[] => {
   const mergedArray: ResultPage[] = [];
 
   const map: { [key: string]: any } = {};
@@ -34,7 +39,7 @@ export const mergeArrays = (arr1: any[], arr2: any[]): ResultPage[] => {
   return mergedArray;
 };
 
-export const convertArray = (arr1: any) => {
+export const convertArray = (arr1: S3UploadPayload[]) => {
   const newArray = arr1.map((page) => {
     return {
       key: page.key,

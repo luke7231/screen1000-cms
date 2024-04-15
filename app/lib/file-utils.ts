@@ -67,10 +67,19 @@ const s3 = new AWS.S3({
   region: "ap-northeast-2",
 });
 
+export interface S3UploadPayload {
+  Bucket: string;
+  ETag: string;
+  Key: string;
+  Location: string;
+  ServerSideEncryption: string;
+  key: string;
+}
+
 export const uploadToS3 = async (
   file: File,
   isCroped?: boolean
-): Promise<string> => {
+): Promise<S3UploadPayload> => {
   return new Promise((resolve, reject) => {
     const filename = removeExtension(file.name);
     // 업로드 명세 정의
