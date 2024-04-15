@@ -53,7 +53,6 @@ const ImageUpload = () => {
 
     setLoading(false);
   };
-
   const handleSubmit = async () => {
     if (selectedFiles.length === 0) {
       alert("이미지를 선택하세요.");
@@ -67,14 +66,14 @@ const ImageUpload = () => {
       if (needCrop) {
         // 1️⃣ full image upload
         const uploadPromises = selectedFiles.map((file: File) => {
-          return uploadToS3(file as File);
+          return uploadToS3(file as File, tag);
         });
         const results = await Promise.all(uploadPromises);
 
         // 2️⃣ croped image upload
         const uploadCropedImgPromises = selectedFiles.map((file: File) => {
           return cropImage(file).then((resizedImage) => {
-            return uploadToS3(resizedImage as File, true);
+            return uploadToS3(resizedImage as File, tag, true);
           });
         });
         const resultCropped = await Promise.all(uploadCropedImgPromises);
@@ -88,7 +87,7 @@ const ImageUpload = () => {
       } else {
         // 1️⃣ full image upload
         const uploadPromises = selectedFiles.map((file: File) => {
-          return uploadToS3(file as File);
+          return uploadToS3(file as File, tag);
         });
         const results = await Promise.all(uploadPromises);
 

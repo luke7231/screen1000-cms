@@ -78,6 +78,7 @@ export interface S3UploadPayload {
 
 export const uploadToS3 = async (
   file: File,
+  tag: string,
   isCroped?: boolean
 ): Promise<S3UploadPayload> => {
   return new Promise((resolve, reject) => {
@@ -86,7 +87,7 @@ export const uploadToS3 = async (
     const params = {
       ACL: "public-read",
       Bucket: "habitstorage", // S3 버킷 이름
-      Key: isCroped ? `${filename}_thumbnail` : filename, // 파일 이름
+      Key: isCroped ? `${tag}/${filename}_thumbnail` : `${tag}/${filename}`, // 파일 이름
       Body: file, // 업로드할 파일 데이터
       ContentType: "image/jpeg",
     };
