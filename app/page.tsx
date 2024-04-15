@@ -8,7 +8,6 @@ import { compressFile, cropImage, uploadToS3 } from "./lib/file-utils";
 const ImageUpload = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<any>([]);
-  const [isOptimized, setIsOptimized] = useState(false);
   const [result, setResult] = useState<any>([]);
   const [tag, setTag] = useState<string>("saas");
   const [needCrop, setNeedCrop] = useState(false);
@@ -41,7 +40,6 @@ const ImageUpload = () => {
         .then((compressedFiles: File[]) => {
           // 새로 압축된 파일로 선택된 파일 업데이트
           setSelectedFiles(compressedFiles);
-          setIsOptimized(true);
           alert("최적화 완료 🚀");
         })
         .catch((error: any) => {
@@ -60,10 +58,7 @@ const ImageUpload = () => {
       alert("이미지를 선택하세요.");
       return;
     }
-    if (!isOptimized) {
-      alert("최적화 먼저 ㄲ");
-      return;
-    }
+
     setLoading(true);
 
     // 🚀 업로드 로직
