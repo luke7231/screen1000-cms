@@ -123,6 +123,13 @@ const ImageUpload = () => {
         >
           <option value="sass">사스</option>
           <option value="saas-global">사스(해외)</option>
+          <option value="sign-in">sign-in</option>
+          <option value="sign-up">sign-up</option>
+          <option value="pricing">pricing</option>
+          <option value="blog">blog</option>
+          <option value="faq">faq</option>
+          <option value="about">about</option>
+          <option value="contact">contact</option>
         </select>
       </div>
       <div className="inline">
