@@ -132,7 +132,7 @@ const ImageUpload = () => {
         </select>
       </div>
       <div className="inline">
-        <span className="pr-4">이미지 자르기</span>
+        <span className="pr-4">썸네일 생성</span>
 
         <input type="checkbox" onChange={() => setNeedCrop((prev) => !prev)} />
       </div>
