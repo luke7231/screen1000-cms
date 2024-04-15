@@ -42,7 +42,7 @@ export const mergeArrays = (
 export const convertArray = (arr1: S3UploadPayload[]) => {
   const newArray = arr1.map((page) => {
     return {
-      key: page.key,
+      key: page.key.split("/")[1],
       img: page.Location,
       thumbnail: page.Location,
     };
